@@ -1,9 +1,6 @@
 import './SmallTextField.css';
-import {useState} from "react";
 
-function SmallTextField({fieldName, fieldData, fieldType}) {
-
-const [textValue, setTextValue] = useState('');
+function SmallTextField({fieldName, fieldData, fieldType, textValue, setTextValue}) {
 
 return (
   <>

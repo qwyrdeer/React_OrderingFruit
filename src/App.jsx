@@ -6,7 +6,8 @@ import ActionButton from "./components/Buttons/ActionButton.jsx";
 import OrderForm from "./components/OrderForm.jsx";
 import SmallTextField from "./components/FormComponents/SmallTextField.jsx";
 import DropDownField from "./components/FormComponents/DropDownField.jsx";
-import RadioButton from "./components/FormComponents/RadioButton.jsx";
+import SingleOptionButton from "./components/Buttons/SingleOptionButton.jsx";
+import LargeTextField from "./components/FormComponents/LargeTextField.jsx";
 
 function App() {
     const [strawberryCounter, setStrawberryCounter] = useState(0);
@@ -20,10 +21,28 @@ function App() {
         setAppleCounter(0);
         setKiwiCounter(0);
     }
+    const [textName, setTextName] = useState('');
+    const [textLastName, setTextLastName] = useState('');
+    const [textAge, setTextAge] = useState('');
+    const [textZipcode, setTextZipcode] = useState('');
 
-    // function handleClick() {
-    //
-    // }
+    const [selectedDelivery, setSelectedDelivery] = useState(false);
+
+    const handleChangeDay = () => {
+        setSelectedDelivery("Day");
+    };
+
+    const handleChangeNight = () => {
+        setSelectedDelivery("Night");
+    };
+
+    const [selectedTerms, toggleSelectedTerms] = useState(false);
+
+    function toggleTerms() {
+        toggleSelectedTerms(!selectedTerms)
+    }
+
+    const [textComment, setTextComment] = useState('');
 
     return (
         <>
@@ -61,43 +80,78 @@ function App() {
                 fieldName="First name"
                 fieldData="first-name"
                 fieldType="text"
+                textValue={textName}
+                setTextValue={setTextName}
             />
 
             <SmallTextField
                 fieldName="Last name"
                 fieldData="last-name"
                 fieldType="text"
+                textValue={textLastName}
+                setTextValue={setTextLastName}
             />
 
             <SmallTextField
                 fieldName="Age"
                 fieldData="age"
                 fieldType="number"
+                textValue={textAge}
+                setTextValue={setTextAge}
             />
 
             <SmallTextField
                 fieldName="Zipcode"
                 fieldData="zipcode"
                 fieldType="text"
+                textValue={textZipcode}
+                setTextValue={setTextZipcode}
             />
 
             <DropDownField
                 fieldName="Delivery interval"
                 fieldData="delivery-interval"
-                fieldOptions={["Iedere week", "Om de week", "Iedere maand"]
-            }
+                fieldOptions={["Iedere week", "Om de week", "Iedere maand"]}
+            />
+            <form>
+            <SingleOptionButton
+                fieldName="Moment of delivery"
+                fieldOption="Day"
+                fieldType="radio"
+                fieldSelection={selectedDelivery}
+                setFieldSelection={setSelectedDelivery}
+                handleClick={handleChangeDay}
+            />
+                <SingleOptionButton
+                    fieldName="Moment of delivery"
+                    fieldOption="Night"
+                    fieldType="radio"
+                    fieldSelection={selectedDelivery}
+                    setFieldSelection={setSelectedDelivery}
+                    handleClick={handleChangeNight}
+                />
+            </form>
+
+            <LargeTextField
+                fieldName="Additional info"
+                fieldData="additional-comments"
+                sizeInRows="10"
+                textValue={textComment}
+                setTextValue={setTextComment}
             />
 
-            <RadioButton
-                fieldName="Moment of delivery"
-                fieldData="delivery-moment"
-                fieldOptions={["Day", "Evening"]}
+            <SingleOptionButton
+                fieldName="Terms&Conditions"
+                fieldOption="Do you accept our Terms and Conditions"
+                fieldType="checkbox"
+                fieldSelection={selectedTerms}
+                setFieldSelection={toggleSelectedTerms}
+                handleClick={toggleTerms}
             />
 
             <ActionButton
                 type="button"
                 buttonName="send"
-                // className=""
             />
 
         </>
