@@ -5,7 +5,7 @@ function ActionButton ({handleClick, buttonName}) {
 return (
   <>
       <button
-          type="reset"
+          type="button"
           onClick={handleClick}
       >
           {buttonName}
