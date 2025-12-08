@@ -3,7 +3,6 @@ import './App.css'
 import React, {useState} from "react";
 import FruitOrder from "./components/FruitOrder.jsx";
 import ActionButton from "./components/Buttons/ActionButton.jsx";
-import OrderForm from "./components/OrderForm.jsx";
 import SmallTextField from "./components/FormComponents/SmallTextField.jsx";
 import DropDownField from "./components/FormComponents/DropDownField.jsx";
 import SingleOptionButton from "./components/Buttons/SingleOptionButton.jsx";
@@ -21,12 +20,13 @@ function App() {
         setAppleCounter(0);
         setKiwiCounter(0);
     }
+
     const [textName, setTextName] = useState('');
     const [textLastName, setTextLastName] = useState('');
     const [textAge, setTextAge] = useState('');
     const [textZipcode, setTextZipcode] = useState('');
 
-    const [selectedDelivery, setSelectedDelivery] = useState(false);
+    const [selectedDelivery, setSelectedDelivery] = useState('');
 
     const handleChangeDay = () => {
         setSelectedDelivery("Day");
@@ -36,10 +36,26 @@ function App() {
         setSelectedDelivery("Night");
     };
 
-    const [selectedTerms, toggleSelectedTerms] = useState(false);
+    const [deliveryInterval, setDeliveryInterval] = useState('');
+
+    const [selectedTerms, toggleSelectedTerms] = useState('');
 
     function toggleTerms() {
         toggleSelectedTerms(!selectedTerms)
+    }
+
+    function sendForm(e) {
+        e.preventDefault()
+        console.log({textName, textLastName, textAge, textZipcode})
+        console.log({deliveryInterval})
+        console.log({selectedDelivery})
+        console.log({textComment})
+        console.log({selectedTerms})
+        console.log("Klant heeft de volgende order geplaatst: 🍓 Aardbeien: " +
+            strawberryCounter + ", 🍌 Bananen: " +
+            bananaCounter + ", 🥝 Kiwis: " +
+            kiwiCounter + ", 🍏 Appels:" +
+            appleCounter)
     }
 
     const [textComment, setTextComment] = useState('');
@@ -69,13 +85,11 @@ function App() {
             />
             <ActionButton
                 buttonName="Reset"
+                type="reset"
                 handleClick={resetAllCounters}
             />
 
-            <OrderForm
-
-            />
-
+            <form onSubmit={sendForm}>
             <SmallTextField
                 fieldName="First name"
                 fieldData="first-name"
@@ -112,16 +126,18 @@ function App() {
                 fieldName="Delivery interval"
                 fieldData="delivery-interval"
                 fieldOptions={["Iedere week", "Om de week", "Iedere maand"]}
+                handleClick={setDeliveryInterval}
             />
-            <form>
-            <SingleOptionButton
-                fieldName="Moment of delivery"
-                fieldOption="Day"
-                fieldType="radio"
-                fieldSelection={selectedDelivery}
-                setFieldSelection={setSelectedDelivery}
-                handleClick={handleChangeDay}
-            />
+
+                <SingleOptionButton
+                    fieldName="Moment of delivery"
+                    fieldOption="Day"
+                    fieldType="radio"
+                    fieldSelection={selectedDelivery}
+                    setFieldSelection={setSelectedDelivery}
+                    handleClick={handleChangeDay}
+                />
+
                 <SingleOptionButton
                     fieldName="Moment of delivery"
                     fieldOption="Night"
@@ -130,7 +146,6 @@ function App() {
                     setFieldSelection={setSelectedDelivery}
                     handleClick={handleChangeNight}
                 />
-            </form>
 
             <LargeTextField
                 fieldName="Additional info"
@@ -148,12 +163,11 @@ function App() {
                 setFieldSelection={toggleSelectedTerms}
                 handleClick={toggleTerms}
             />
-
             <ActionButton
-                type="button"
+                type="submit"
                 buttonName="send"
             />
-
+            </form>
         </>
     )
 }

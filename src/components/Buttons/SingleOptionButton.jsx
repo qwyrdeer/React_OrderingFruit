@@ -4,12 +4,12 @@ function SingleOptionButton({fieldName, fieldOption, fieldType, handleClick}) {
 
     return (
   <>
-      <label>
+      <label >
           <input
               type={fieldType}
               name={fieldName}
               value={fieldOption}
-              onClick={() => handleClick}
+              onChange={(e) => handleClick(e.target.value)}
           /> {fieldOption}
       </label>
   </>
