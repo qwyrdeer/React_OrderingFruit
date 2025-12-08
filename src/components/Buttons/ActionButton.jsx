@@ -1,11 +1,11 @@
 
 import React from "react";
 
-function ActionButton ({handleClick, buttonName}) {
+function ActionButton ({handleClick, buttonName, type}) {
 return (
   <>
       <button
-          type="reset"
+          type={type}
           onClick={handleClick}
       >
           {buttonName}
